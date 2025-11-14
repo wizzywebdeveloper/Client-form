@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Development Inquiry Form</title>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px;
+      color: #ffffff;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+
+    .logo-space {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: 700;
+      color: #ffffff;
+      flex-shrink: 0;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    img {
+        border-radius: 100%;
+    }
+
+    .header-text {
+      text-align: left;
+      flex: 1;
+    }
+
+    .header h1 {
+      margin: 0 0 8px 0;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .header p {
+      margin: 0;
+      font-size: 16px;
+      opacity: 0.95;
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .header-text {
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+    }
+
+    .form-content {
+      padding: 40px;
+    }
+
+    .form-section {
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1a202c;
+      margin: 0 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 8px;
+    }
+
+    .required {
+      color: #e53e3e;
+      margin-left: 4px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      background: #ffffff;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      cursor: pointer;
+      accent-color: #667eea;
+    }
+
+    .checkbox-item label {
+      margin: 0;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 24px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .radio-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .radio-item input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin-right: 8px;
+      cursor: pointer;
+      accent-color: #667eea;
+    }
+
+    .radio-item label {
+      margin: 0;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 16px;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .success-message {
+      display: none;
+      background: #48bb78;
+      color: #ffffff;
+      padding: 16px 24px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    .error-message {
+      display: none;
+      background: #f56565;
+      color: #ffffff;
+      padding: 16px 24px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .limit-warning {
+      display: none;
+      background: #ed8936;
+      color: #ffffff;
+      padding: 16px 24px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .limit-warning.show {
+      display: block;
+    }
+
+    .footer-disclaimer {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 2px solid #e2e8f0;
+      text-align: center;
+      font-size: 13px;
+      color: #718096;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      .form-content {
+        padding: 24px;
+      }
+
+      .checkbox-group {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <div class="header">
+    <div class="header-content">
+     <div class="logo-space">
+      <img src="img/logo.jpg" alt="logo">
+     </div>
+     <div class="header-text">
+      <h1 id="form-title">Website Development Inquiry</h1>
+      <p id="form-subtitle">Tell us about your project and we'll get back to you within 24 hours</p>
+     </div>
+    </div>
+   </div>
+   <div class="form-content">
+    <div id="success-message" class="success-message">
+     Thank you! Your inquiry has been submitted successfully. We'll contact you soon.
+    </div>
+    <div id="error-message" class="error-message">
+     Something went wrong. Please try again.
+    </div>
+    <div id="limit-warning" class="limit-warning">
+     Maximum limit of 999 submissions reached. Please contact us directly.
+    </div>
+     <form id="inquiry-form" action="https://formspree.io/f/xqayeqwa" method="POST">
+     <div class="form-section">
+      <h2 class="section-title">Contact Information</h2>
+      <div class="form-row">
+       <div class="form-group"><label for="company-name">Company Name <span class="required">*</span></label> <input type="text" id="company-name" name="company-name" required>
+       </div>
+       <div class="form-group"><label for="contact-name">Your Name <span class="required">*</span></label> <input type="text" id="contact-name" name="contact-name" required>
+       </div>
+      </div>
+      <div class="form-row">
+       <div class="form-group"><label for="email">Email Address <span class="required">*</span></label> <input type="email" id="email" name="email" required>
+       </div>
+       <div class="form-group"><label for="phone">Phone Number</label> <input type="tel" id="phone" name="phone">
+       </div>
+      </div>
+     </div>
+     <div class="form-section">
+      <h2 class="section-title">Project Details</h2>
+      <div class="form-group"><label for="website-type">Type of Website <span class="required">*</span></label> <select id="website-type" name="website-type" required> <option value="">Select website type</option> <option value="business">Business/Corporate</option> <option value="ecommerce">E-commerce</option> <option value="portfolio">Portfolio</option> <option value="blog">Blog/Magazine</option> <option value="landing">Landing Page</option> <option value="custom">Custom Web Application</option> <option value="other">Other</option> </select>
+      </div>
+      <div class="form-row">
+       <div class="form-group"><label for="budget">Budget Range <span class="required">*</span></label> <select id="budget" name="budget" required> <option value="">Select budget range</option> <option value="under-5k">Under $5,000</option> <option value="5k-10k">$5,000 - $10,000</option> <option value="10k-25k">$10,000 - $25,000</option> <option value="25k-50k">$25,000 - $50,000</option> <option value="over-50k">Over $50,000</option> </select>
+       </div>
+       <div class="form-group"><label for="timeline">Desired Timeline <span class="required">*</span></label> <select id="timeline" name="timeline" required> <option value="">Select timeline</option> <option value="urgent">ASAP (1-2 weeks)</option> <option value="1-month">1 Month</option> <option value="2-3-months">2-3 Months</option> <option value="3-6-months">3-6 Months</option> <option value="flexible">Flexible</option> </select>
+       </div>
+      </div>
+      <div class="form-group"><label>Required Features <span class="required">*</span></label>
+       <div class="checkbox-group">
+        <div class="checkbox-item"><input type="checkbox" id="feature-responsive" name="features" value="responsive"> <label for="feature-responsive">Responsive Design</label>
+        </div>
+        <div class="checkbox-item"><input type="checkbox" id="feature-cms" name="features" value="cms"> <label for="feature-cms">Content Management System</label>
+        </div>
+        <div class="checkbox-item"><input type="checkbox" id="feature-payment" name="features" value="payment"> <label for="feature-payment">Payment Gateway</label>
+        </div>
+        <div class="checkbox-item"><input type="checkbox" id="feature-auth" name="features" value="auth"> <label for="feature-auth">User Authentication</label>
+        </div>
+        <div class="checkbox-item"><input type="checkbox" id="feature-api" name="features" value="api"> <label for="feature-api">API Integration</label>
+        </div>
+        <div class="checkbox-item"><input type="checkbox" id="feature-dashboard" name="features" value="dashboard"> <label for="feature-dashboard">Analytics Dashboard</label>
+        </div>
+        <div class="checkbox-item"><input type="checkbox" id="feature-chat" name="features" value="chat"> <label for="feature-chat">Live Chat Support</label>
+        </div>
+        <div class="checkbox-item"><input type="checkbox" id="feature-multilang" name="features" value="multilang"> <label for="feature-multilang">Multi-language Support</label>
+        </div>
+        <div class="checkbox-item"><input type="checkbox" id="feature-ecommerce" name="features" value="ecommerce"> <label for="feature-ecommerce">E-commerce</label>
+        </div>
+        <div class="checkbox-item"><input type="checkbox" id="feature-seo" name="features" value="seo"> <label for="feature-seo">SEO Optimization</label>
+        </div>
+        <div class="checkbox-item"><input type="checkbox" id="feature-social" name="features" value="social"> <label for="feature-social">Social Media Integration</label>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="form-section">
+      <h2 class="section-title">Design &amp; Content</h2>
+      <div class="form-group"><label>Design Preference</label>
+       <div class="radio-group">
+        <div class="radio-item"><input type="radio" id="design-modern" name="design" value="modern"> <label for="design-modern">Modern &amp; Minimal</label>
+        </div>
+        <div class="radio-item"><input type="radio" id="design-bold" name="design" value="bold"> <label for="design-bold">Bold &amp; Creative</label>
+        </div>
+        <div class="radio-item"><input type="radio" id="design-classic" name="design" value="classic"> <label for="design-classic">Classic &amp; Professional</label>
+        </div>
+        <div class="radio-item"><input type="radio" id="design-custom" name="design" value="custom"> <label for="design-custom">Custom Design</label>
+        </div>
+       </div>
+      </div>
+      <div class="form-group"><label>Do you have content ready?</label>
+       <div class="radio-group">
+        <div class="radio-item"><input type="radio" id="content-yes" name="content" value="yes"> <label for="content-yes">Yes, all ready</label>
+        </div>
+        <div class="radio-item"><input type="radio" id="content-partial" name="content" value="partial"> <label for="content-partial">Partially ready</label>
+        </div>
+        <div class="radio-item"><input type="radio" id="content-no" name="content" value="no"> <label for="content-no">Need help with content</label>
+        </div>
+       </div>
+      </div>
+      <div class="form-group"><label for="additional-info">Additional Information</label> <textarea id="additional-info" name="additional-info" placeholder="Tell us more about your project, goals, target audience, or any specific requirements..."></textarea>
+      </div>
+     </div><button type="submit" class="submit-btn" id="submit-btn"> <span id="submit-button-text">Submit Inquiry</span> </button>
+     <div class="footer-disclaimer">
+      By submitting this form, you agree to our terms and conditions. We'll never share your information.
+     </div>
+    </form>
+   </div>
+  </div>
+
+
+  <script>
+    const defaultConfig = {
+      form_title: "Website Development Inquiry",
+      form_subtitle: "Tell us about your project and we'll get back to you within 24 hours",
+      submit_button_text: "Submit Inquiry",
+      background_color: "#667eea",
+      surface_color: "#ffffff",
+      text_color: "#1a202c",
+      primary_action_color: "#667eea",
+      secondary_action_color: "#764ba2",
+      font_family: "Inter",
+      font_size: 16
+    };
+
+    let currentRecordCount = 0;
+
+    const dataHandler = {
+      onDataChanged(data) {
+        currentRecordCount = data.length;
+      }
+    };
+
+    async function initializeApp() {
+      if (window.dataSdk) {
+        const initResult = await window.dataSdk.init(dataHandler);
+        if (!initResult.isOk) {
+          console.error("Failed to initialize data SDK");
+        }
+      }
+
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (config) => {
+            const formTitle = document.getElementById('form-title');
+            const formSubtitle = document.getElementById('form-subtitle');
+            const submitButtonText = document.getElementById('submit-button-text');
+            const customFont = config.font_family || defaultConfig.font_family;
+            const baseSize = config.font_size || defaultConfig.font_size;
+            const baseFontStack = '-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif';
+
+            formTitle.textContent = config.form_title || defaultConfig.form_title;
+            formSubtitle.textContent = config.form_subtitle || defaultConfig.form_subtitle;
+            submitButtonText.textContent = config.submit_button_text || defaultConfig.submit_button_text;
+
+            document.body.style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
+            document.querySelector('.header').style.background = `linear-gradient(135deg, ${config.primary_action_color || defaultConfig.primary_action_color} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
+            document.querySelector('.container').style.background = config.surface_color || defaultConfig.surface_color;
+            document.querySelector('.submit-btn').style.background = `linear-gradient(135deg, ${config.primary_action_color || defaultConfig.primary_action_color} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
+
+            const textElements = document.querySelectorAll('.section-title, label, .checkbox-item label, .radio-item label');
+            textElements.forEach(el => {
+              el.style.color = config.text_color || defaultConfig.text_color;
+            });
+
+            formTitle.style.fontFamily = `${customFont}, ${baseFontStack}`;
+            formSubtitle.style.fontFamily = `${customFont}, ${baseFontStack}`;
+            document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+
+            formTitle.style.fontSize = `${baseSize * 2}px`;
+            formSubtitle.style.fontSize = `${baseSize}px`;
+            document.querySelector('.section-title').style.fontSize = `${baseSize * 1.25}px`;
+            document.body.style.fontSize = `${baseSize}px`;
+          },
+          mapToCapabilities: (config) => ({
+            recolorables: [
+              {
+                get: () => config.background_color || defaultConfig.background_color,
+                set: (value) => {
+                  config.background_color = value;
+                  window.elementSdk.setConfig({ background_color: value });
+                }
+              },
+              {
+                get: () => config.surface_color || defaultConfig.surface_color,
+                set: (value) => {
+                  config.surface_color = value;
+                  window.elementSdk.setConfig({ surface_color: value });
+                }
+              },
+              {
+                get: () => config.text_color || defaultConfig.text_color,
+                set: (value) => {
+                  config.text_color = value;
+                  window.elementSdk.setConfig({ text_color: value });
+                }
+              },
+              {
+                get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                set: (value) => {
+                  config.primary_action_color = value;
+                  window.elementSdk.setConfig({ primary_action_color: value });
+                }
+              },
+              {
+                get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                set: (value) => {
+                  config.secondary_action_color = value;
+                  window.elementSdk.setConfig({ secondary_action_color: value });
+                }
+              }
+            ],
+            borderables: [],
+            fontEditable: {
+              get: () => config.font_family || defaultConfig.font_family,
+              set: (value) => {
+                config.font_family = value;
+                window.elementSdk.setConfig({ font_family: value });
+              }
+            },
+            fontSizeable: {
+              get: () => config.font_size || defaultConfig.font_size,
+              set: (value) => {
+                config.font_size = value;
+                window.elementSdk.setConfig({ font_size: value });
+              }
+            }
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ["form_title", config.form_title || defaultConfig.form_title],
+            ["form_subtitle", config.form_subtitle || defaultConfig.form_subtitle],
+            ["submit_button_text", config.submit_button_text || defaultConfig.submit_button_text]
+          ])
+        });
+      }
+    }
+
+    initializeApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99d6724644f29378',t:'MTc2Mjk1NDg4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
